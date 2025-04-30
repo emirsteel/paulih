@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "commonjs",
+    "target": "ES6",
+    "moduleResolution": "node"
+  },
+    "include": ["src"],                      // Include the backend `src` folder for TypeScript files
+    "exclude": ["node_modules"]              // Exclude node_modules folder
+  }
+  

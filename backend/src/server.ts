@@ -1,0 +1,86 @@
+// backend/src/server.ts
+import dotenv from "dotenv";
+dotenv.config();
+
+import path from "path";
+import express from "express";
+import http from "http";
+import cors from "cors";
+import mongoose from "mongoose";
+import app from "./app"; // Your Express app instance
+import postRoutes from "./routes/post.routes";
+import userRoutes from "./routes/user.routes";
+import companyRoutes from "./routes/company.routes";
+import groupRoutes from "./routes/group.routes";
+import venueRoutes from "./routes/venues.routes";
+import productRoutes from "./routes/products.routes";
+import cartRoutes from "./routes/cart.routes";
+import paymentRoutes from "./routes/payment.routes";
+import promoRoutes from "./routes/promo.routes";
+import supplierRoutes from "./routes/supplier.routes";
+import orderRoutes from "./routes/order.routes";
+import requestRoutes from "./routes/requests.routes";
+import orderAddressRoutes from "./routes/orderadress.routes";
+import { initializeWebSocket } from "./socket";
+import bookmarkRoutes from "./routes/bookmark.routes";
+import notificationRoutes from "./routes/notifications.routes";
+import friendRoutes from "./routes/friend.routes";
+import courierRoutes from "./routes/courier.routes";
+import reportPostRoutes from "./routes/reportpost.routes";
+import pagesRoutes from "./routes/pages.routes";
+import eventsRouter from "./routes/events.routes";
+import reportRoutes from "./routes/report.routes";
+import blockRoutes from "./routes/block.routes";
+
+const PORT = process.env.PORT || 5001;
+
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Adjust to your frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+
+const uploadsPath = path.join(__dirname, "../uploads");
+app.use("/uploads", express.static(uploadsPath));
+
+const frontendPath = path.join(__dirname, "../../frontend/build");
+app.use(express.static(frontendPath));
+
+// Mount API routes
+app.use("/api/posts", postRoutes);
+app.use("/api/bookmarks", bookmarkRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/companies", companyRoutes);
+app.use("/api/groups", groupRoutes);
+app.use("/api/venues", venueRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/payments", paymentRoutes);
+app.use("/api/promos", promoRoutes);
+app.use("/api/suppliers", supplierRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/requests", requestRoutes);
+app.use("/api/order-address", orderAddressRoutes);
+app.use("/api/notifications", notificationRoutes);
+app.use("/api/friends", friendRoutes);
+app.use("/api/couriers", courierRoutes);
+app.use("/api/reportposts", reportPostRoutes);
+app.use("/api/pages", pagesRoutes);
+app.use("/api/events", eventsRouter);
+app.use("/api/report", reportRoutes);
+app.use("/api/blocks", blockRoutes);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(frontendPath, "index.html"));
+});
+
+const server = http.createServer(app);
+initializeWebSocket(server);
+
+server.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});

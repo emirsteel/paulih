@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkpaulih_frontend=self.webpackChunkpaulih_frontend||[]).push([[199],{199:(e,t,s)=>{s.r(t),s.d(t,{default:()=>r});var u=s(5043),n=s(50),a=s(3790),l=s(579);const r=()=>{const[e,t]=(0,u.useState)(!1);return(0,u.useEffect)((()=>{const e=localStorage.getItem("supplierToken");t(!!e)}),[]),e?(0,l.jsx)(a.default,{}):(0,l.jsx)(n.A,{})}}}]);
+//# sourceMappingURL=199.5fbdc88c.chunk.js.map

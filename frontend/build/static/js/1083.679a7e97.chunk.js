@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkpaulih_frontend=self.webpackChunkpaulih_frontend||[]).push([[1083],{1083:(e,r,n)=>{n.r(r),n.d(r,{default:()=>t});n(5043);var s=n(579);const t=()=>(0,s.jsxs)("div",{children:[(0,s.jsx)("h2",{className:"text-lg font-bold text-gray-600 mb-4",children:"Privacy Settings"}),(0,s.jsx)("p",{children:"Configure your privacy preferences here."})]})}}]);
+//# sourceMappingURL=1083.679a7e97.chunk.js.map

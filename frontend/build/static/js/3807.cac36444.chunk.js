@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkpaulih_frontend=self.webpackChunkpaulih_frontend||[]).push([[3807],{3807:(e,n,s)=>{s.r(n),s.d(n,{default:()=>t});s(5043);var r=s(579);const t=()=>(0,r.jsx)("div",{children:"Discover pages content goes here."})}}]);
+//# sourceMappingURL=3807.cac36444.chunk.js.map

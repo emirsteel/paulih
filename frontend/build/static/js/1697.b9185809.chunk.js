@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkpaulih_frontend=self.webpackChunkpaulih_frontend||[]).push([[1697],{1697:(e,n,s)=>{s.r(n),s.d(n,{default:()=>a});s(5043);var t=s(579);const a=()=>(0,t.jsx)("div",{children:"Page invites content goes here."})}}]);
+//# sourceMappingURL=1697.b9185809.chunk.js.map

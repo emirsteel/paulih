@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkpaulih_frontend=self.webpackChunkpaulih_frontend||[]).push([[187],{187:(e,n,s)=>{s.r(n),s.d(n,{default:()=>a});s(5043);var t=s(579);const a=()=>(0,t.jsx)("div",{children:"Liked pages content goes here."})}}]);
+//# sourceMappingURL=187.d9d10405.chunk.js.map

@@ -2,6 +2,7 @@
   "name": "paulih-backend",
   "version": "1.0.0",
   "description": "Backend for the Paulih project using Express, MongoDB, and TypeScript",
+    "type": "module",
   "main": "dist/server.js",
   "scripts": {
     "start": "node dist/server.js",

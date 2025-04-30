@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkpaulih_frontend=self.webpackChunkpaulih_frontend||[]).push([[8974],{8974:(e,t,s)=>{s.r(t),s.d(t,{default:()=>p});var u=s(5043),a=s(3216),r=s(50),l=s(3790),n=s(579);const p=()=>{const e=(0,a.Zp)(),[t,s]=(0,u.useState)(!1);return(0,u.useEffect)((()=>{localStorage.getItem("supplierToken")?(s(!0),e("/supplier-dashboard")):s(!1)}),[e]),t?(0,n.jsx)(l.default,{}):(0,n.jsx)(r.A,{})}}}]);
+//# sourceMappingURL=8974.b5d185a2.chunk.js.map

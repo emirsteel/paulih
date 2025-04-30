@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Paulih</title>
+
+    <script
+      data-ad-client="ca-pub-4386980014525432"
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+    ></script>
+
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-o5MjgCkrbOexvT7QF4Mi9nNEM/yCzISvWshJKUQQgok="
+      crossorigin="anonymous"
+    />
+
+    <!-- Stripe.js -->
+    <script
+      src="https://js.stripe.com/v3/"
+      integrity="sha384-..."
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Favicon -->
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  </head>
+  <body>
+    <!-- Root Element for React -->
+    <div id="root"></div>
+
+    <script>
+      let stripe;
+
+      function initializeStripe() {
+        if (!stripe) {
+          stripe = Stripe(
+            "pk_test_51PbfE9Rr9xRSaQNstpsKub9ahljQ64uu4o6I5GVhN2yDTuDbfUzUwwwEjYxz95gEWNrpZhoS32FI8trVGdJH0DWc00S6D3eSX8"
+          );
+          console.log("Stripe reloaded:", stripe);
+        }
+      }
+
+      // Ensure Stripe is initialized every time the page is active
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") {
+          initializeStripe();
+        }
+      });
+
+      // Initialize Stripe on page load
+      initializeStripe();
+    </script>
+  </body>
+</html>

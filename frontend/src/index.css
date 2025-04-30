@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+/* Tailwind Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+  Use Inter as the default font for the entire site.
+  This applies to the <html> element so all child elements
+  inherit it unless otherwise overridden.
+*/
+html {
+  font-family: "Inter", sans-serif;
+}
+
+.fire-text {
+  position: relative;
+  background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.no-fire-text {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: initial !important;
+  animation: none !important;
+}
+
+@keyframes fireSlide {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 100%;
+  }
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}

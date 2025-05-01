@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import mongoose from "mongoose";
 import {
   authMiddleware,
   AuthenticatedRequest,
@@ -171,7 +172,7 @@ router.post(
         return res.status(400).json({ message: "Friend request already sent" });
       }
 
-      targetUser.friendRequests.push({ sender: requesterId });
+      targetUser.friendRequests.push({ sender: new mongoose.Types.ObjectId(requesterId.toString()) });
       await targetUser.save();
 
       res.status(200).json({ message: "Friend request sent successfully" });
@@ -212,7 +213,7 @@ router.post(
 
       if (action === "accept") {
         targetUser.friends.push(requesterId);
-        requester.friends.push(targetUserId);
+        requester.friends.push(new mongoose.Types.ObjectId(targetUserId.toString()));
       }
 
       await targetUser.save();

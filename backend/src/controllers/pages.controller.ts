@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import Page from "../models/pages.model";
 import { AuthenticatedRequest } from "../middleware/auth.middleware";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose"; 
 
 export const createPage = async (req: Request, res: Response) => {
   const {
@@ -202,12 +203,15 @@ export const followPage = async (req: AuthenticatedRequest, res: Response) => {
       return res.status(404).json({ message: "Page not found." });
     }
     // Check if the user already follows the page
-    if (page.followers.includes(userId)) {
-      return res
-        .status(400)
-        .json({ message: "User already follows this page." });
-    }
-    page.followers.push(userId);
+// Check if the user already follows the page
+if (page.followers.includes(userId as mongoose.Types.ObjectId)) {
+  return res
+    .status(400)
+    .json({ message: "User already follows this page." });
+}
+
+// Add the user to followers
+page.followers.push(userId as mongoose.Types.ObjectId);
     await page.save();
     return res
       .status(200)
@@ -236,15 +240,17 @@ export const unfollowPage = async (
       return res.status(404).json({ message: "Page not found." });
     }
     // Check if the user is actually following the page
-    if (!page.followers.includes(userId)) {
-      return res
-        .status(400)
-        .json({ message: "User is not following this page." });
-    }
-    // Remove the userId from the followers array
-    page.followers = page.followers.filter(
-      (follower) => follower.toString() !== userId.toString()
-    );
+// Check if the user is actually following the page
+if (!page.followers.includes(userId as mongoose.Types.ObjectId)) {
+  return res
+    .status(400)
+    .json({ message: "User is not following this page." });
+}
+
+// Remove the user from followers
+page.followers = page.followers.filter(
+  (follower) => follower.toString() !== userId.toString()
+);
     await page.save();
     return res
       .status(200)

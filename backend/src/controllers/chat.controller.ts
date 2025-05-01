@@ -151,30 +151,35 @@ export const reactMessage = async (
 ) => {
   const { messageId, emoji } = req.body;
   const userId = req.user?._id.toString();
+
   if (!messageId || !emoji) {
     return res
       .status(400)
       .json({ message: "Missing messageId or emoji in request" });
   }
+
   try {
     const message = await ChatMessage.findById(messageId);
     if (!message) {
       return res.status(404).json({ message: "Message not found" });
     }
 
-    // Ensure only one reaction per user per message:
-    // Remove any previous reaction from this user.
+    // Remove any previous reaction from this user
     message.reactions = (message.reactions || []).filter(
       (reaction) => reaction.user.toString() !== userId
     );
 
-    // Add the new reaction.
-    message.reactions.push({ user: userId, emoji, timestamp: new Date() });
+    // ✅ Add new reaction with proper ObjectId type
+    message.reactions.push({
+      user: new mongoose.Types.ObjectId(userId),
+      emoji,
+      timestamp: new Date(),
+    });
 
     await message.save();
     res.status(200).json(message);
 
-    // Emit updated message reaction to the appropriate room.
+    // Emit update
     if (message.groupId) {
       io.to(message.groupId.toString()).emit("receiveReaction", message);
     } else if (message.receiver) {
@@ -185,7 +190,6 @@ export const reactMessage = async (
     res.status(500).json({ message: "Server error" });
   }
 };
-
 // --------------------------------------------------------------------
 // removeReaction - removes the specified emoji reaction from the current user
 // --------------------------------------------------------------------

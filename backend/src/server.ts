@@ -1,12 +1,13 @@
 // backend/src/server.ts
+
 import dotenv from "dotenv";
 dotenv.config();
 
-import path from "path";
 import express from "express";
+import path from "path";
 import http from "http";
 import cors from "cors";
-import mongoose from "mongoose";
+
 import app from "./app";
 import { initializeWebSocket } from "./socket";
 
@@ -35,27 +36,32 @@ import blockRoutes from "./routes/block.routes";
 
 const PORT = process.env.PORT || 5001;
 
-// CORS Configuration
-app.use(
-  cors({
-    origin: "http://localhost:3000", // Change if deployed to a domain
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true,
-  })
-);
+// -------------------------
+// Middleware
+// -------------------------
 
-// JSON parsing
-app.use(express.json());
+app.use(cors({
+  origin: "http://localhost:3000", // Change this in production
+  credentials: true,
+}));
 
-// Serve uploads statically
-const uploadsPath = path.join(__dirname, "../uploads");
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
+
+// -------------------------
+// Static Assets
+// -------------------------
+
+const uploadsPath = path.resolve(__dirname, "../uploads");
 app.use("/uploads", express.static(uploadsPath));
 
-// Serve frontend build statically
-const frontendPath = path.join(__dirname, "../../frontend/build");
+const frontendPath = path.resolve(__dirname, "../../frontend/build");
 app.use(express.static(frontendPath));
 
+// -------------------------
 // API Routes
+// -------------------------
+
 app.use("/api/posts", postRoutes);
 app.use("/api/bookmarks", bookmarkRoutes);
 app.use("/api/users", userRoutes);
@@ -79,21 +85,30 @@ app.use("/api/events", eventsRouter);
 app.use("/api/report", reportRoutes);
 app.use("/api/blocks", blockRoutes);
 
-// ✅ Test API endpoint
+// -------------------------
+// Health Check
+// -------------------------
+
 app.get("/api", (req, res) => {
   res.status(200).json({ message: "API is working ✅" });
 });
 
-// ✅ Fallback: Serve React frontend for non-API routes
+// -------------------------
+// Frontend Fallback
+// -------------------------
+
 app.get("*", (req, res, next) => {
   if (req.originalUrl.startsWith("/api")) return next();
   res.sendFile(path.resolve(frontendPath, "index.html"));
 });
 
-// Start HTTP server & WebSocket
+// -------------------------
+// Server + WebSocket Init
+// -------------------------
+
 const server = http.createServer(app);
 initializeWebSocket(server);
 
 server.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

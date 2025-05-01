@@ -194,25 +194,28 @@ export const loginPage = async (req: Request, res: Response) => {
 export const followPage = async (req: AuthenticatedRequest, res: Response) => {
   const { pageId } = req.params;
   const userId = req.user?._id;
+
   if (!userId) {
     return res.status(401).json({ message: "Unauthorized: no user id." });
   }
+
   try {
     const page = await Page.findById(pageId);
     if (!page) {
       return res.status(404).json({ message: "Page not found." });
     }
-    // Check if the user already follows the page
-// Check if the user already follows the page
-if (page.followers.includes(userId as mongoose.Types.ObjectId)) {
-  return res
-    .status(400)
-    .json({ message: "User already follows this page." });
-}
 
-// Add the user to followers
-page.followers.push(userId as mongoose.Types.ObjectId);
+    const userObjectId = new mongoose.Types.ObjectId(userId.toString());
+
+    if (page.followers.some(f => f.toString() === userObjectId.toString())) {
+      return res
+        .status(400)
+        .json({ message: "User already follows this page." });
+    }
+
+    page.followers.push(userObjectId);
     await page.save();
+
     return res
       .status(200)
       .json({ message: "Page followed successfully.", page });
@@ -231,27 +234,35 @@ export const unfollowPage = async (
 ) => {
   const { pageId } = req.params;
   const userId = req.user?._id;
+
   if (!userId) {
     return res.status(401).json({ message: "Unauthorized: no user id." });
   }
+
   try {
     const page = await Page.findById(pageId);
     if (!page) {
       return res.status(404).json({ message: "Page not found." });
     }
-    // Check if the user is actually following the page
-// Check if the user is actually following the page
-if (!page.followers.includes(userId as mongoose.Types.ObjectId)) {
-  return res
-    .status(400)
-    .json({ message: "User is not following this page." });
-}
 
-// Remove the user from followers
-page.followers = page.followers.filter(
-  (follower) => follower.toString() !== userId.toString()
-);
+    const userObjectId = new mongoose.Types.ObjectId(userId.toString());
+
+    const isFollowing = page.followers.some(
+      (f) => f.toString() === userObjectId.toString()
+    );
+
+    if (!isFollowing) {
+      return res
+        .status(400)
+        .json({ message: "User is not following this page." });
+    }
+
+    page.followers = page.followers.filter(
+      (f) => f.toString() !== userObjectId.toString()
+    );
+
     await page.save();
+
     return res
       .status(200)
       .json({ message: "Page unfollowed successfully.", page });

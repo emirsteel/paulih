@@ -37,11 +37,9 @@ export interface IUser extends Document {
   resetPasswordExpires?: Date;
   bio?: string;
   bannerImage?: string;
-  friendRequests: [
-    {
-      sender: { type: mongoose.Schema.Types.ObjectId; ref: "User" };
-    }
-  ];
+friendRequests: {
+  sender: mongoose.Types.ObjectId;
+}[];
   friends: mongoose.Types.ObjectId[];
   lastActive?: Date;
   badges: string[];

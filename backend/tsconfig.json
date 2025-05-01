@@ -1,15 +1,16 @@
 {
   "compilerOptions": {
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "commonjs",
-    "target": "ES6",
-    "moduleResolution": "node"
+    "target": "ES6",                                // Set the output to modern JavaScript
+    "module": "commonjs",                           // CommonJS for Node.js
+    "moduleResolution": "node",
+    "outDir": "./dist",                             // Output compiled files to dist/
+    "rootDir": "./src",                             // Source files located in src/
+    "esModuleInterop": true,                        // Allow default imports from CommonJS modules
+    "resolveJsonModule": true,                      // Allow importing .json files
+    "forceConsistentCasingInFileNames": true,       // Enforce consistent casing in imports
+    "skipLibCheck": true,                           // Skip type checking of declaration files
+    "strict": true                                  // Enable all strict type-checking options
   },
-    "include": ["src"],                      // Include the backend `src` folder for TypeScript files
-    "exclude": ["node_modules"]              // Exclude node_modules folder
-  }
-  
+  "include": ["src"],                               // Include only the backend source files
+  "exclude": ["node_modules", "dist"]               // Exclude build output and dependencies
+}
